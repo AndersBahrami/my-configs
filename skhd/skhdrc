@@ -39,6 +39,16 @@ shift + cmd - m :
 	jq -re 'map(select(."windows" == []).index) | reverse | .[] ' | \
 	xargs -I % sh -c 'yabai -m space % --destroy'
 
+shift + cmd - 1 : yabai -m space --focus 1
+shift + cmd - 2 : yabai -m space --focus 2
+shift + cmd - 3 : yabai -m space --focus 3
+shift + cmd - 4 : yabai -m space --focus 4
+shift + cmd - 5 : yabai -m space --focus 5
+shift + cmd - 6 : yabai -m space --focus 6
+
+
+
+
 cmd - g : yabai -m window --toggle zoom-fullscreen
 #ctrl - g : yabai -m window --toggle float
 
@@ -64,6 +74,29 @@ shift + cmd - right : yabai -m window --warp east
 shift + cmd - 0 : yabai -m space --balance
 
 
+#move window to prev and next space
+shift + alt - z : yabai -m window --space prev;
+shift + alt - x : yabai -m window --space next;
+
+# move window to space #
+shift + alt - 1 : yabai -m window --space 1;
+shift + alt - 2 : yabai -m window --space 2; 
+shift + alt - 3 : yabai -m window --space 3;
+shift + alt - 4 : yabai -m window --space 4;
+shift + alt - 5 : yabai -m window --space 5;
+shift + alt - 6 : yabai -m window --space 6;
+
+# stop/start/restart yabai
+ctrl + alt - q : yabai --stop-service
+ctrl + alt - s : yabai --start-service
+ctrl + alt - r : yabai --restart-service
+
+
+
+shift + cmd - d : yabai -m window --resize right:20:0
+shift + cmd - a : yabai -m window --resize right:-20:0
+shift + cmd - d : yabai -m window --resize left:20:0
+shift + cmd - a : yabai -m window --resize left:-20:0
 
 
 
@@ -87,13 +120,6 @@ shift + cmd - 0 : yabai -m space --balance
 #ctrl + alt - 2 : yabai -m display --focus 2
 #ctrl + alt - 3 : yabai -m display --focus 3
 #ctrl + alt - 4 : yabai -m display --focus 4
-
-# Expand focused window to the right, shrink neighbor
-#shift + cmd - d : yabai -m window --resize right:20:0
-# Expand focused window to the left, shrink neighbor
-#shift + cmd - a : yabai -m window --resize right:-20:0
-# toggle window split type
-# float / unfloat window and center on screen
 
 
 
