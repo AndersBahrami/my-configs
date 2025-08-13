@@ -1,0 +1,115 @@
+#!/usr/bin/env bash
+
+# #############################################################################
+# Do not delete the `UNIQUE_ID` line below, I use it to backup original files
+# so they're not lost when my symlinks are applied
+# UNIQUE_ID=do_not_delete_this_line
+# #############################################################################
+
+# To get the names of all the running applications
+# yabai -m query --windows | jq -r '.[].app'
+
+# Load all the variables I need from the yabai_env.sh file
+source "$HOME/.config/yabai/yabai_env.sh"
+
+# This command is the one that loads the scripting addition
+# Configure your user to execute `yabai --load-sa` as the root user without having to enter a password.
+#  https://github.com/koekeishiya/yabai/wiki/Installing-yabai-(latest-release)#configure-scripting-addition
+yabai -m signal --add event=dock_did_restart action="sudo yabai --load-sa"
+sudo yabai --load-sa
+
+# In order to prevent simple-bar freezing upon yabai restart, you'll need to add
+# this line at the start of your .yabairc file
+# https://www.jeantinland.com/toolbox/simple-bar/documentation/installation/#update-your-yabai-config
+osascript -e 'tell application id "tracesOf.Uebersicht" to refresh'
+
+
+# bsp or float (default: float)
+yabai -m config layout bsp
+
+# Override default layout for space 2 only
+yabai -m config --space 2 layout float
+
+# New window spawns to the left if vertical split, or top if horizontal split
+yabai -m config window_placement first_child
+
+# New window spawns to the right if vertical split, or bottom if horizontal split
+yabai -m config window_placement second_child
+
+
+# Set all padding and gaps to 20pt (default: 0)
+yabai -m config top_padding    8
+yabai -m config bottom_padding 8
+yabai -m config left_padding   8
+yabai -m config right_padding  8
+yabai -m config window_gap     8
+
+yabai -m config auto_balance on
+
+
+
+
+
+
+
+
+
+# Override gaps for space 2 only
+# yabai -m config --space 2 window_gap 0
+
+# floating windows are always on top (default: off)
+yabai -m config window_topmost on
+
+# modify window shadows (default: on, options: on, off, float)
+# example: show shadows only for floating windows
+yabai -m config window_shadow float
+
+# set mouse interaction modifier key (default: fn) yabai -m config mouse_modifier fn # set modifier + left-click drag to move window (default: move) yabai -m config mouse_action1 move # set modifier + right-click drag to resize window (default: resize) yabai -m config mouse_action2 resize
+
+# set focus follows mouse mode (default: off, options: off, autoraise, autofocus)
+yabai -m config focus_follows_mouse autoraise
+
+
+
+
+
+
+
+
+
+# WINDOW MODIFICATIONS
+# floating windows are always on top (default: off)
+yabai -m config window_topmost on
+
+# modify window shadows (default: on, options: on, off, float)
+# example: show shadows only for floating windows
+yabai -m config window_shadow float
+
+# window opacity (default: off)
+# example: render all unfocused windows with 90% opacity
+yabai -m config window_opacity on
+yabai -m config active_window_opacity 1.0
+yabai -m config normal_window_opacity 0.90
+
+# window border (default: off)
+# - width has unit 1pt
+# - colors for borders are in the format AARRGGBB (alpha, red, green, blue) 
+#    as a hexadecimal value
+# - active means focused window, normal means unfocused window, 
+#    insert means selected window
+yabai -m config window_border on
+yabai -m config window_border_width 40
+yabai -m config active_window_border_color 0xff775759
+yabai -m config normal_window_border_color 0xff505050
+yabai -m config insert_window_border_color 0xffd75f5f
+
+
+
+# Disable specific apps
+#yabai -m rule --remove app="^(System Settings|Finder|Notes)$"
+yabai -m rule --add app="^(System Settings|Finder|Notes)$" manage=off
+
+#yabai -m rule --apply
+
+
+

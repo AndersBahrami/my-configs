@@ -1,0 +1,103 @@
+# cmd - return : osascript ~/.config/skhd/iterm.scpt
+cmd - return : open -na 'terminal'
+#cmd - 0 : open -na 'google chrome' --args --profile-directory="Default" --new-window
+
+cmd - 1 : open -na 'google chrome' --args --profile-directory="Default" --new-window
+cmd - 2 : open -na 'google chrome' --args --profile-directory="Profile 4" --new-window
+
+shift + cmd - z : yabai -m space --focus prev
+shift + cmd - x : yabai -m space --focus next
+
+cmd - e : yabai -m space --toggle show-desktop
+
+shift + cmd - n : yabai -m space --create && \
+	index="$(yabai -m query --spaces --display | jq 'map(select(."is-native-fullscreen" == false))[-1].index')" && \
+	yabai -m space --focus "${index}"
+
+shift + alt - n : yabai -m space --create && \
+	index="$(yabai -m query --spaces --display | jq 'map(select(."is-native-fullscreen" == false))[-1].index')" && \
+	yabai -m window --space "${index}" && \
+	yabai -m space --focus "${index}"
+
+shift + alt - m :
+	index="$(yabai -m query --spaces --display | jq 'map(select(."has-focus" == true))[0].index')" && \
+	yabai -m space --destroy && \
+	yabai -m space --focus "${index}" || yabai -m space --focus "$(($index - 1))" \
+	&& yabai -m query --spaces --display | \
+	jq -re 'map(select(."is-native-fullscreen" == false)) | length > 1' \
+	&& yabai -m query --spaces | \
+	jq -re 'map(select(."windows" == []).index) | reverse | .[] ' | \
+	xargs -I % sh -c 'yabai -m space % --destroy'
+
+shift + cmd - m :
+	index="$(yabai -m query --spaces --display | jq 'map(select(."has-focus" == true))[0].index')" && \
+	yabai -m space --destroy && \
+	yabai -m space --focus "${index}" || yabai -m space --focus "$(($index - 1))" \
+	&& yabai -m query --spaces --display | \
+	jq -re 'map(select(."is-native-fullscreen" == false)) | length > 1' \
+	&& yabai -m query --spaces | \
+	jq -re 'map(select(."windows" == []).index) | reverse | .[] ' | \
+	xargs -I % sh -c 'yabai -m space % --destroy'
+
+cmd - g : yabai -m window --toggle zoom-fullscreen
+#ctrl - g : yabai -m window --toggle float
+
+# this is for use with fuzzyhome
+#cmd - s [
+#	"google chrome" : skhd --key "cmd + shift - h"
+#]
+
+shift + cmd - e : yabai -m window --toggle split
+shift + cmd - f : yabai -m window --toggle float --grid 4:4:1:1:2:2
+
+# swap managed window
+shift + alt - up : yabai -m window --swap north
+shift + alt - down : yabai -m window --swap south
+shift + alt - left : yabai -m window --swap west
+shift + alt - right : yabai -m window --swap east
+# move managed window
+shift + cmd - up : yabai -m window --warp north
+shift + cmd - down : yabai -m window --warp south 
+shift + cmd - left : yabai -m window --warp west
+shift + cmd - right : yabai -m window --warp east
+# balance size of windows
+shift + cmd - 0 : yabai -m space --balance
+
+
+
+
+
+
+
+
+
+
+
+
+# focus window
+#alt - j : yabai -m window --focus west
+#alt - k : yabai -m window --focus south
+#alt - i : yabai -m window --focus north
+#alt - l : yabai -m window --focus east
+
+# focus monitor
+#ctrl + alt - z : yabai -m display --focus next
+#ctrl + alt - x : yabai -m display --focus prev
+#ctrl + alt - 1 : yabai -m display --focus 1
+#ctrl + alt - 2 : yabai -m display --focus 2
+#ctrl + alt - 3 : yabai -m display --focus 3
+#ctrl + alt - 4 : yabai -m display --focus 4
+
+# Expand focused window to the right, shrink neighbor
+#shift + cmd - d : yabai -m window --resize right:20:0
+# Expand focused window to the left, shrink neighbor
+#shift + cmd - a : yabai -m window --resize right:-20:0
+# toggle window split type
+# float / unfloat window and center on screen
+
+
+
+
+
+
+
